@@ -26,7 +26,7 @@ GitHub Pages will automatically build and publish pages when you push them to yo
 
 Jekyll is a Ruby Gem that must be [installed](https://jekyllrb.com/docs/installation/) on your system, which in my case is a Centos 7 workstation. 
 
-The pre-requisites are Ruby version 2.4.0 or above, GCC and Make.
+The pre-requisites are Ruby version 2.4.0 or above, as well as GCC and Make.
 
 Install the development tools group which includes GCC and Make:
 ```bash
@@ -42,7 +42,7 @@ $ sudo \curl -sSL https://get.rvm.io | bash -s stable
 ```
 For reasons best known to the RVM developers, their installation instructions prefix the curl command with a backslash to suppress any aliases for curl. It is not a typo. 
 
-Add your Linux user to the RVM group so that it can be used by non-root users:
+Add your Linux user to the RVM group so that it can be used as a non-root user:
 ```bash
 $ sudo usermod -a -G rvm <devuser>
 $ sudo getent group rvm
@@ -52,11 +52,11 @@ where `<devuser>` is your Linux username.
 
 Logout and login again to activate the group membership.
 
-List all known rubies:
+List all known rubies to find the latest version of Ruby:
 ```bash
 $ rvm list known | less
 ```
-Install the latest version (version 2.6 in this case) and check the versions:
+Install the latest version (2.6 in this case) and check the version numbers:
 ```bash
 $ rvm install ruby-2.6
     (be patient...)
@@ -84,7 +84,7 @@ $ bundle exec jekyll serve
 ```
 Now browse to [http://localhost:4000](http://localhost:4000)
 
-Edit [`_config.yml`](https://github.com/GeraldScott/geraldscott.github.io/blob/master/_config.yml) to change the blog title and other site-specific details. Your inaugural post is in `_posts/yyyy-mm-dd-welcome-to-jekyll.markdown`. Edit it as you see fit.
+Edit [`_config.yml`](https://github.com/GeraldScott/geraldscott.github.io/blob/master/_config.yml) to change the blog title and other site-specific details. The inaugural post is in `_posts/yyyy-mm-dd-welcome-to-jekyll.markdown`. Edit it as you see fit.
 
 ### Publish to github.io
 Before you publish the website, edit the [Gemfile](https://github.com/GeraldScott/geraldscott.github.io/blob/master/Gemfile) to delete the Jekyll gem and replace it with 
@@ -108,10 +108,10 @@ Commit the staged files:
 ```bash
 $ git commit -m "Initial commit"
 ```
-If you have not already done so, create the repository `<username>.github.io`, link your newly generated website to the repo by copying the URL of the project repo to the local git repo, then push the contents to GitHub:
+If you have not already done so, create the repository `<username>.github.io`, then link your newly generated website to the repo by adding the URL of the project repo to the origin of the local git repo and push the contents to GitHub:
 ```bash
 $ git remote add origin git@github.com:<username>/<username>.github.io.git
 $ git push -u origin master --force
 ```
-The `--force` will overwrite the contents of the GitHub repo with the contents of the newly generated website, so be careful.
+The `--force` option will overwrite the contents of the GitHub repo with the contents of the newly generated website, so be careful.
 
