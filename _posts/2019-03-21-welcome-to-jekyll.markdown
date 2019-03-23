@@ -4,7 +4,7 @@ title:  "From Blogger to GitHub Pages using Centos 7"
 date:   2019-03-21 11:07:21 +0200
 categories: jekyll update
 ---
-I was using Google's Blogger platform to host this blog, but I decided to migrate it to [GitHub Pages](https://pages.github.com/) in case Blogger follows Google+ to the Great BitBucket in the Sky.
+I have been using Google's Blogger platform to host this blog, but I decided to migrate it to [GitHub Pages](https://pages.github.com/) in case Blogger follows Google+ to the Great BitBucket in the Sky.
 
 This post describes how to create and maintain a personal web site on GitHub Pages, and to migrate your Blogger content to the new site.
 
@@ -20,11 +20,12 @@ Follow the instructions on the GitHub Pages [website](https://pages.github.com/)
 
 Clone the repository to your development environment so that you can work on it using your favourite tools, then push the changes back up to GitHub. After a moment or two, you will see the fruits of your labours by browsing to `https://<username>.github.io`.
 
+You could continue to work on this simple local copy to build up a functionally rich website, but you will have to set up a Jekyll development environment to do things like migrate posts from Blogger. 
+
+The next section describes how to do this and use Jekyll to generate the website.
 ## Jekyll development environment
 ### Install RVM and Ruby
-GitHub Pages will automatically build and publish pages when you push them to your repository, but if you like to live life in "Hard" mode, as I do, you can install and run Jekyll locally to get the full experience. 
-
-Jekyll is a Ruby Gem that must be [installed](https://jekyllrb.com/docs/installation/) on your system, which in my case is a Centos 7 workstation. 
+Jekyll is a Ruby Gem that must be [installed](https://jekyllrb.com/docs/installation/) on your system, which in my case is a Centos 7 workstation. These instructions should work for other RPM-based distros like RHEL or Fedora.
 
 The pre-requisites are Ruby version 2.4.0 or above, as well as GCC and Make.
 
@@ -73,7 +74,7 @@ Now install Jekyll and the gem bundler:
 $ gem install jekyll bundler
 ```
 ### Generate a Jekyll website
-I used Jekyll to generate this website from scratch rather than rely on GitHub Pages to do the right thing, as follows:
+Use Jekyll to generate this website from scratch rather than rely on GitHub Pages to do the right thing, as follows:
 ```bash
 $ jekyll new <username>.github.io
 ```
@@ -82,16 +83,12 @@ Fire it up:
 $ cd <username>.github.io
 $ bundle exec jekyll serve
 ```
-Now browse to [http://localhost:4000](http://localhost:4000)
+Now browse to [http://localhost:4000](http://localhost:4000) to see your new site.
 
 Edit [`_config.yml`](https://github.com/GeraldScott/geraldscott.github.io/blob/master/_config.yml) to change the blog title and other site-specific details. The inaugural post is in `_posts/yyyy-mm-dd-welcome-to-jekyll.markdown`. Edit it as you see fit.
 
 ### Publish to github.io
-Before you publish the website, edit the [Gemfile](https://github.com/GeraldScott/geraldscott.github.io/blob/master/Gemfile) to delete the Jekyll gem and replace it with 
-```bash
-gem "github-pages", group: :jekyll_plugins
-``` 
-which is a gem that contains the GitHub Pages functionality and then update the bundle:
+Before you publish the website, edit the [Gemfile](https://github.com/GeraldScott/geraldscott.github.io/blob/master/Gemfile) to delete the Jekyll gem and replace it with a gem that contains themes and GitHub Pages functionality by uncommenting the line `gem "github-pages", group: :jekyll_plugins`. Update the bundle:
 ```bash
 $ vi Gemfile
 $ bundle update
@@ -100,11 +97,7 @@ Initialize the current working directory as a Git repository:
 ```bash
 $ git init
 ```
-Stage the files for the initial commit (note the dot):
-```bash
-$ git add .
-```
-Commit the staged files:
+Stage and commit the files:
 ```bash
 $ git commit -m "Initial commit"
 ```
@@ -114,4 +107,21 @@ $ git remote add origin git@github.com:<username>/<username>.github.io.git
 $ git push -u origin master --force
 ```
 The `--force` option will overwrite the contents of the GitHub repo with the contents of the newly generated website, so be careful.
+## Migrate Blogger posts
+Migrating your Blogger posts is straighforward because Jekyll provides [importers](https://import.jekyllrb.com/docs/home/) to move from other blog platforms. 
 
+Follow the [instructions](https://import.jekyllrb.com/docs/blogger/) to [create a backup file](https://support.google.com/blogger/answer/41387?visit_id=636889153776042945-750428619&rd=1) of your Blogger posts called `blog-MM-DD-YYYY.xml`. Import them into Jekyll:
+```bash
+$ ruby -r rubygems -e 'require "jekyll-import";
+    JekyllImport::Importers::Blogger.run({
+      "source"                => "/path/to/blog-MM-DD-YYYY.xml",
+      "no-blogger-info"       => false, # not to leave blogger-URL info (id and old URL) in the front matter
+      "replace-internal-link" => false, # replace internal links using the post_url liquid tag.
+    })'
+```
+This will generate the posts in `_posts`.
+
+Note that “Labels” will be included in export as “Tags”.
+
+If you uploaded images to your Blogger posts, they will be visible as links to your original blog, so you will have to download them and insert them locally before you decommission the old blog.
+ 
