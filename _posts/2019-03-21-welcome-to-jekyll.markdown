@@ -22,7 +22,7 @@ Clone the repository to your development environment so that you can work on it 
 
 You could continue to work on this simple local copy to build up a functionally rich website, but you will have to set up a Jekyll development environment to do things like migrate posts from Blogger. 
 
-The next section describes how to do this and use Jekyll to generate the website.
+The next section describes how to do this using Jekyll to generate the website.
 ## Jekyll development environment
 ### Install RVM and Ruby
 Jekyll is a Ruby Gem that must be [installed](https://jekyllrb.com/docs/installation/) on your system, which in my case is a Centos 7 workstation. These instructions should work for other RPM-based distros like RHEL or Fedora.
@@ -74,7 +74,7 @@ Now install Jekyll and the gem bundler:
 $ gem install jekyll bundler
 ```
 ### Generate a Jekyll website
-Use Jekyll to generate this website from scratch rather than rely on GitHub Pages to do the right thing, as follows:
+Use Jekyll to generate your website from scratch rather than rely on GitHub Pages to do the right thing, as follows:
 ```bash
 $ jekyll new <username>.github.io
 ```
