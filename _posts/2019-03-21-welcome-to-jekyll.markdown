@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "From Blogger to GitHub Pages using Centos 7"
+title:  "From Blogger to GitHub Pages"
 date:   2019-03-21 11:07:21 +0200
 categories: jekyll update
 ---
@@ -90,7 +90,12 @@ Now browse to [http://localhost:4000](http://localhost:4000) to see your new sit
 Edit [`_config.yml`](https://github.com/GeraldScott/geraldscott.github.io/blob/master/_config.yml) to change the blog title and other site-specific details. The inaugural post is in `_posts/yyyy-mm-dd-welcome-to-jekyll.markdown`. Edit it as you see fit.
 
 ### Publish to github.io
-Before you publish the website to `github.io`, you must edit the [Gemfile](https://github.com/GeraldScott/geraldscott.github.io/blob/master/Gemfile) to delete the Jekyll gem and replace it with the gem that contains the GitHub Pages functionality by uncommenting the line `gem "github-pages", group: :jekyll_plugins`, then update the site to install the gems:
+The default site that Jekyll generated is powered by two gems:
+```ruby
+gem "jekyll", "~> 3.8.5"
+gem "minima", "~> 2.0"
+```
+To get the full value of GitHub Pages, replace these two with the `github-pages` gem before you publish the website to `github.io`, so edit the [Gemfile](https://github.com/GeraldScott/geraldscott.github.io/blob/master/Gemfile) to delete these default Jekyll gems and replace them with the gem that contains the GitHub Pages functionality by uncommenting the line `gem "github-pages", group: :jekyll_plugins`, then update the site to install the gems:
 ```bash
 $ vi Gemfile
 $ bundle update
