@@ -2,7 +2,7 @@
 layout: post
 title:  "From Blogger to GitHub Pages"
 date:   2019-03-21 11:07:21 +0200
-categories: jekyll update
+categories: jekyll githubpages
 ---
 I was using Google's Blogger platform to host this blog, but I migrated it to [GitHub Pages](https://pages.github.com/) in case Blogger follows Google+ to the Great BitBucket in the Sky.
 
